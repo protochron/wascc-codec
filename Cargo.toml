@@ -1,0 +1,27 @@
+[package]
+name = "wascc-codec"
+version = "0.3.0"
+authors = ["Kevin Hoffman <alothien@gmail.com>"]
+edition = "2018"
+description = "Encoding and decoding primitives for wascc"
+license = "Apache-2.0"
+documentation = "https://docs.rs/wascc-codec"
+readme = "README.md"
+keywords = ["webassembly", "wasm", "codec", "wascc"]
+categories = ["wasm", "data-structures","encoding"]
+homepage = "https://wascc.dev"
+
+[badges]
+travis-ci = { repository = "wascc/wascc-codec", branch = "master" }
+
+
+[dependencies]
+prost = "0.5.0"
+bytes = "0.4.12" # prost can't use 0.5.0 yet
+prost-types = "0.5.0"
+serde = "1.0.103"
+serde_json = "1.0.42"
+serde_derive = "1.0.103"
+
+[build-dependencies]
+prost-build = "0.5.0"

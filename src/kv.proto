@@ -1,0 +1,136 @@
+// Copyright 2015-2018 Capital One Services, LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and 
+// limitations under the License.
+
+syntax = "proto3";
+
+package keyvalue;
+
+// A request to get a single value from the K/V store
+message GetRequest {
+    string key = 1;
+}
+
+// The result of a get request 
+message GetResponse {
+    string value = 1; // String value of the requested item
+    bool exists = 2; // Indicates if the requested item existed 
+}
+
+// A request to set a value
+message SetRequest {
+    string key = 1; // Key of the item to set
+    string value = 2; // Value of the item to set
+    int32 expires_s = 3; // Seconds after which the key will expire, 0 - no expiration
+}
+
+// A request to delete a key
+message DelRequest {
+    string key = 1; // Key to delete
+}
+
+message DelResponse {
+    string key = 1;
+}
+
+// Response to a set request 
+message SetResponse {
+    string value = 1; // The value that was set
+}
+
+// A request to perform an atomic add operation
+message AddRequest {
+    string key = 1; // The key of the item
+    int32 value = 2; // Value to add 
+}
+
+// Result of an atomic add operation
+message AddResponse { 
+    int32 value = 1; // New value
+}
+
+// A request to add an item to the end of a list
+message ListPushRequest {
+    string key = 1; // Key 
+    string value = 2; // Value to add
+}
+
+// A request to delete all occurences of an item from a list
+message ListDelItemRequest {
+    string key = 1; // Key 
+    string value = 2; // Value to remove
+}
+
+// A request to clear a list at a given key 
+message ListClearRequest {
+    string key = 1; // Key of the list to clear
+}
+
+// A request to retrieve a range of values from a list
+message ListRangeRequest {
+    string key = 1; // Key of the list
+    int32 start = 2; // Starting value of the range
+    int32 stop = 3; // Stop value (inclusive) of the range
+}
+
+// List of values returned from a range request
+message ListRangeResponse {
+    repeated string values = 1;
+}
+
+// Return response from non-range list requests like push and clear
+message ListResponse {
+    int32 new_count = 1;
+}
+
+// Request to add an item to a set
+message SetAddRequest {
+    string key = 1;
+    string value = 2;
+}
+
+// Request to remove a specific value from a set
+message SetRemoveRequest {
+    string key = 1;
+    string value = 2;
+}
+
+// Request to query the contents of a set
+message SetQueryRequest {
+    string key = 1;
+}
+
+// Response to an operation that requests members of a list (query, intersect, union)
+message SetQueryResponse {
+    repeated string values = 1;
+}
+
+// Request for the intersection of multiple sets
+message SetIntersectionRequest {
+    repeated string keys = 1;
+}
+
+// Request for the union of multiple sets
+message SetUnionRequest {
+    repeated string keys = 1;
+}
+
+// Response to a set query, add, or delete
+message SetOperationResponse {
+    int32 new_count = 1;
+}
+
+// Test for the existence of a key
+message KeyExistsQuery {
+    string key = 1;
+}

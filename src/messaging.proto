@@ -1,0 +1,43 @@
+// Copyright 2015-2018 Capital One Services, LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and 
+// limitations under the License.
+
+syntax = "proto3";
+
+package messaging;
+
+// A request to deliver a message to a guest module
+message DeliverMessage {
+    BrokerMessage message = 1;
+}
+
+// A request to publish a message from a guest module
+message PublishMessage {
+    BrokerMessage message = 2;
+}
+
+// A representation of a broker message
+message BrokerMessage {
+    string subject = 1; // The subject on which the broker message resides
+    string reply_to = 2; // A reply-to for the message (empty if not applicable)
+    bytes body = 3; // The body of the message as a blob of bytes
+}
+
+// A request for the broker to make a request-and-reply publication. Inbox management
+// is handled by the plugin implementation, not by the guest module
+message RequestMessage {
+    string subject = 1; // Subject on which message is published
+    bytes body = 2; // The body of the message
+    int64 timeout_ms = 3; // Timeout, in milliseconds, to await a response
+}
+

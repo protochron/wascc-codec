@@ -1,0 +1,45 @@
+// Copyright 2015-2019 Capital One Services, LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and 
+// limitations under the License.
+
+syntax = "proto3";
+
+package core;
+
+// LiveUpdate is used when a new module has been uploaded through the HTTP server capability provider. The bytes 
+// contained in this message will, if valid, replace the existing guest module
+message LiveUpdate {
+    bytes new_module = 1;
+}
+
+// A health request is passed to a guest module to allow it to return an empty result. If the guest module
+// returns the empty result, it is considered healthy
+message HealthRequest {
+    bool placeholder = 1;
+}
+
+// Used by portable capability providers to identify themselves to the host runtime
+message CapabilityIdResponse {
+    string capability_id = 1;
+    string friendly_name = 2;    
+}
+
+// Capability providers must be able to accept configuration values on a per-module basis. The module
+// field will be the public key of the module (the subject field of its embedded JWT), though providers
+// should make no assumptions about the contents of that field.
+message CapabilityConfiguration {
+    string module = 1; 
+    map<string, string> values = 2;
+}
+
+message EmptyMessage{}
