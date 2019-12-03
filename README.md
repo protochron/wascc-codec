@@ -1,6 +1,7 @@
-![crates.io](https://img.shields.io/crates/v/wascc-codec.svg)&nbsp;
+[![crates.io](https://img.shields.io/crates/v/wascc-codec.svg)](https://crates.io/crates/wascc-codec)&nbsp;
 ![travis](https://travis-ci.org/wascc/wascc-codec.svg?branch=master)&nbsp;
-![license](https://img.shields.io/crates/l/wascc-codec.svg)
+![license](https://img.shields.io/crates/l/wascc-codec.svg)&nbsp;
+[![documentation](https://docs.rs/wascc-codec/badge.svg)](https://docs.rs/wascc-codec)
 
 # waSCC Codec
 
