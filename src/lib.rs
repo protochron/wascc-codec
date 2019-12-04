@@ -30,8 +30,8 @@ pub mod http {
     use serde::ser::Serialize;
     use std::collections::HashMap;
 
-    pub const OP_PERFORM_REQUEST: &str = "wascc:http_client!PerformRequest";
-    pub const OP_HANDLE_REQUEST: &str = "wascc:http_server!HandleRequest";
+    pub const OP_PERFORM_REQUEST: &str = "PerformRequest";
+    pub const OP_HANDLE_REQUEST: &str = "HandleRequest";
 
     impl Into<Request> for &[u8] {
         fn into(self) -> Request {
@@ -105,11 +105,11 @@ pub mod core {
     //! that is not specific to any given capability provider
     include!(concat!(env!("OUT_DIR"), "/core.rs"));
 
-    pub const OP_PERFORM_LIVE_UPDATE: &str = "wascc:core!PerformLiveUpdate";
-    pub const OP_IDENTIFY_CAPABILITY: &str = "wascc:core!IdentifyCapability";
-    pub const OP_HEALTH_REQUEST: &str = "wascc:core!HealthRequest";
-    pub const OP_INITIALIZE: &str = "wascc:core!Initialize";
-    pub const OP_CONFIGURE: &str = "wascc:core!Configure";
+    pub const OP_PERFORM_LIVE_UPDATE: &str = "PerformLiveUpdate";
+    pub const OP_IDENTIFY_CAPABILITY: &str = "IdentifyCapability";
+    pub const OP_HEALTH_REQUEST: &str = "HealthRequest";
+    pub const OP_INITIALIZE: &str = "Initialize";
+    pub const OP_CONFIGURE: &str = "Configure";
 }
 
 pub mod messaging {
@@ -120,9 +120,9 @@ pub mod messaging {
 
     include!(concat!(env!("OUT_DIR"), "/messaging.rs"));
 
-    pub const OP_PUBLISH_MESSAGE: &str = "wascc:messaging!Publish";
-    pub const OP_DELIVER_MESSAGE: &str = "wascc:messaging!DeliverMessage";
-    pub const OP_PERFORM_REQUEST: &str = "wascc:messaging!Request";
+    pub const OP_PUBLISH_MESSAGE: &str = "Publish";
+    pub const OP_DELIVER_MESSAGE: &str = "DeliverMessage";
+    pub const OP_PERFORM_REQUEST: &str = "Request";
 
     impl Into<DeliverMessage> for &[u8] {
         fn into(self) -> DeliverMessage {
@@ -149,21 +149,21 @@ pub mod keyvalue {
     //! This module contains data types for the `wascc:keyvalue` capability provider
     include!(concat!(env!("OUT_DIR"), "/keyvalue.rs"));
 
-    pub const OP_ADD: &str = "wascc:keyvalue!Add";
-    pub const OP_GET: &str = "wascc:keyvalue!Get";
-    pub const OP_SET: &str = "wascc:keyvalue!Set";
-    pub const OP_DEL: &str = "wascc:keyvalue!Del";
-    pub const OP_CLEAR: &str = "wascc:keyvalue!Clear";
-    pub const OP_RANGE: &str = "wascc:keyvalue!Range";
-    pub const OP_PUSH: &str = "wascc:keyvalue!Push";
-    pub const OP_LIST_DEL: &str = "wascc:keyvalue!ListItemDelete";
+    pub const OP_ADD: &str = "Add";
+    pub const OP_GET: &str = "Get";
+    pub const OP_SET: &str = "Set";
+    pub const OP_DEL: &str = "Del";
+    pub const OP_CLEAR: &str = "Clear";
+    pub const OP_RANGE: &str = "Range";
+    pub const OP_PUSH: &str = "Push";
+    pub const OP_LIST_DEL: &str = "ListItemDelete";
 
-    pub const OP_SET_ADD: &str = "wascc:keyvalue!SetAdd";
-    pub const OP_SET_REMOVE: &str = "wascc:keyvalue!SetRemove";
-    pub const OP_SET_UNION: &str = "wascc:keyvalue!SetUnion";
-    pub const OP_SET_INTERSECT: &str = "wascc:keyvalue!SetIntersection";
-    pub const OP_SET_QUERY: &str = "wascc:keyvalue!SetQuery";
-    pub const OP_KEY_EXISTS: &str = "wascc:keyvalue!KeyExists";
+    pub const OP_SET_ADD: &str = "SetAdd";
+    pub const OP_SET_REMOVE: &str = "SetRemove";
+    pub const OP_SET_UNION: &str = "SetUnion";
+    pub const OP_SET_INTERSECT: &str = "SetIntersection";
+    pub const OP_SET_QUERY: &str = "SetQuery";
+    pub const OP_KEY_EXISTS: &str = "KeyExists";
 }
 
 pub mod capabilities;
