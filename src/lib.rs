@@ -103,6 +103,8 @@ pub mod core {
     //!
     //! This module contains data types used for wascc actor module and host runtime communications
     //! that is not specific to any given capability provider
+    use prost::Message;
+    
     include!(concat!(env!("OUT_DIR"), "/core.rs"));
 
     pub const OP_PERFORM_LIVE_UPDATE: &str = "PerformLiveUpdate";
@@ -110,6 +112,12 @@ pub mod core {
     pub const OP_HEALTH_REQUEST: &str = "HealthRequest";
     pub const OP_INITIALIZE: &str = "Initialize";
     pub const OP_CONFIGURE: &str = "Configure";
+
+    impl Into<CapabilityConfiguration> for &[u8] {
+        fn into(self) -> CapabilityConfiguration {
+            CapabilityConfiguration::decode(self).unwrap()
+        }
+    }
 }
 
 pub mod messaging {
