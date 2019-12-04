@@ -52,7 +52,7 @@ pub trait CapabilityProvider: Any + Send + Sync {
     /// .e.g. include "Redis" in the name for a Redis-based capability provider.
     fn name(&self) -> &'static str;
     /// This function is called by the host runtime when an actor module is requesting a command be executed by the capability provider
-    fn handle_call(&self, op: &str, msg: &[u8]) -> Result<Vec<u8>, Box<dyn Error>>;
+    fn handle_call(&self, actor: &str, op: &str, msg: &[u8]) -> Result<Vec<u8>, Box<dyn Error>>;
 }
 
 /// Wraps a constructor inside an FFI function to allow the `CapabilityProvider` trait implementation
