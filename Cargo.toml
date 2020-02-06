@@ -1,6 +1,6 @@
 [package]
 name = "wascc-codec"
-version = "0.3.4"
+version = "0.3.5"
 authors = ["Kevin Hoffman <alothien@gmail.com>"]
 edition = "2018"
 description = "Encoding and decoding primitives for waSCC (WebAssembly Secure Capabilities Connector)"
@@ -16,12 +16,12 @@ travis-ci = { repository = "wascc/wascc-codec", branch = "master" }
 
 
 [dependencies]
-prost = "0.5.0"
-bytes = "0.4.12" # prost can't use 0.5.0 yet
-prost-types = "0.5.0"
+prost = "0.6.1"
+bytes = "0.5.4" 
+prost-types = "0.6.1"
 serde = "1.0.104"
-serde_json = "1.0.44"
+serde_json = "1.0.46"
 serde_derive = "1.0.104"
 
 [build-dependencies]
-prost-build = "0.5.0"
+prost-build = "0.6.1"
