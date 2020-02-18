@@ -5,6 +5,7 @@ fn main() {
             "src/core.proto",
             "src/messaging.proto",
             "src/kv.proto",
+            "src/blob.proto",
         ],
         &["src/"],
     )

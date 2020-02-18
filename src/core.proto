@@ -28,12 +28,6 @@ message HealthRequest {
     bool placeholder = 1;
 }
 
-// Used by portable capability providers to identify themselves to the host runtime
-message CapabilityIdResponse {
-    string capability_id = 1;
-    string friendly_name = 2;    
-}
-
 // Capability providers must be able to accept configuration values on a per-module basis. The module
 // field will be the public key of the module (the subject field of its embedded JWT), though providers
 // should make no assumptions about the contents of that field.
@@ -43,3 +37,7 @@ message CapabilityConfiguration {
 }
 
 message EmptyMessage{}
+
+message SimpleBoolean {
+    bool value = 1;
+}
