@@ -121,6 +121,34 @@ pub mod core {
     }
 }
 
+pub mod extras {
+    //! # Extras
+    //!
+    //! Miscellaneous operations that might be common across many different types of actors that
+    //! shouldn't require a full capability provider plugin, like random numbers, sequence
+    //! numbers, etc.
+
+    use prost::Message;
+
+    include!(concat!(env!("OUT_DIR"), "/extras.rs"));
+
+    pub const OP_REQUEST_GUID: &str = "RequestGuid";
+    pub const OP_REQUEST_SEQUENCE: &str = "RequestSequence";
+    pub const OP_REQUEST_RANDOM: &str = "RequestRandom";
+
+    impl Into<GeneratorResult> for &[u8] {
+        fn into(self) -> GeneratorResult {
+            GeneratorResult::decode(self).unwrap()
+        }
+    }
+
+    impl Into<GeneratorRequest> for &[u8] {
+        fn into(self) -> GeneratorRequest {
+            GeneratorRequest::decode(self).unwrap()
+        }
+    }
+}
+
 pub mod blobstore {
     //! # Binary object storage and streaming
     //!
