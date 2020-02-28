@@ -149,6 +149,55 @@ pub mod extras {
     }
 }
 
+pub mod eventstreams {
+    //! # Event Streaming
+    //!
+    //! This module contains data types and operation constants for the `wascc:eventstreams` capability
+    //! provider. For more information on append-only event streams, event sourcing, and how they apply
+    //! to waSCC actor development, check the documentation on [waSCC.dev](https://wascc.dev)
+
+    use prost::Message;
+
+    include!(concat!(env!("OUT_DIR"), "/eventstream.rs"));
+
+    /// Capability provider uses this operation to deliver an event to an actor
+    pub const OP_DELIVER_EVENT: &str = "DeliverEvent";
+    /// Actor invokes this operation on provider to write an event to a given event stream
+    pub const OP_WRITE_EVENT: &str = "WriteEvent";
+    /// Actor invokes this operation to execute a query against an event stream
+    pub const OP_QUERY_STREAM: &str = "QueryStream";
+
+    impl Into<Event> for &[u8] {
+        fn into(self) -> Event {
+            Event::decode(self).unwrap()
+        }
+    }
+
+    impl Into<StreamQuery> for &[u8] {
+        fn into(self) -> StreamQuery {
+            StreamQuery::decode(self).unwrap()
+        }
+    }
+
+    impl Into<TimeRange> for &[u8] {
+        fn into(self) -> TimeRange {
+            TimeRange::decode(self).unwrap()
+        }
+    }
+
+    impl Into<WriteResponse> for &[u8] {
+        fn into(self) -> WriteResponse {
+            WriteResponse::decode(self).unwrap()
+        }
+    }
+
+    impl Into<StreamResults> for &[u8] {
+        fn into(self) -> StreamResults {
+            StreamResults::decode(self).unwrap()
+        }
+    }
+}
+
 pub mod blobstore {
     //! # Binary object storage and streaming
     //!

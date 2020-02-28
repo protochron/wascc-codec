@@ -7,6 +7,7 @@ fn main() {
             "src/kv.proto",
             "src/blob.proto",
             "src/extras.proto",
+            "src/eventstream.proto",
         ],
         &["src/"],
     )
