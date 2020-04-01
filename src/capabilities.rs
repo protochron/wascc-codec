@@ -1,4 +1,4 @@
-// Copyright 2015-2019 Capital One Services, LLC
+// Copyright 2015-2020 Capital One Services, LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ use std::any::Any;
 /// The dispatcher is used by a native capability provider to send commands to an actor module, expecting
 /// a result containing a binary blob in return
 pub trait Dispatcher: Any + Send + Sync {
-    fn dispatch(&self, op: &str, msg: &[u8]) -> Result<Vec<u8>, Box<dyn Error>>;
+    fn dispatch(&self, actor: &str, op: &str, msg: &[u8]) -> Result<Vec<u8>, Box<dyn Error>>;
 }
 
 /// The NullDispatcher is as its name implies--a dispatcher that does nothing. This is convenient for
@@ -37,7 +37,7 @@ impl NullDispatcher {
 }
 
 impl Dispatcher for NullDispatcher {
-    fn dispatch(&self, _op: &str, _msg: &[u8]) -> Result<Vec<u8>, Box<dyn Error>> {
+    fn dispatch(&self, _actor: &str, _op: &str, _msg: &[u8]) -> Result<Vec<u8>, Box<dyn Error>> {
         unimplemented!()
     }
 }

@@ -32,7 +32,7 @@ where
     T: Serialize,
 {
     let mut buf = Vec::new();
-    item.serialize(&mut Serializer::new(&mut buf))?;
+    item.serialize(&mut Serializer::new(&mut buf).with_struct_map())?;
     Ok(buf)
 }
 
