@@ -14,7 +14,9 @@ pub struct Request {
     pub method: String,
     pub path: String,
     pub query_string: String,
+    #[serde(default="default_hashmap")]
     pub header: HashMap<String, String>,
+    #[serde(with = "serde_bytes")]
     pub body: Vec<u8>,
 }
 
@@ -22,10 +24,16 @@ pub struct Request {
 /// to a request command
 #[derive(Debug, PartialEq, Deserialize, Serialize, Default)]
 pub struct Response {
-    pub status_code: u32,
-    pub status: String,
+    pub status_code: u32,    
+    pub status: String,  
+    #[serde(default="default_hashmap")]  
     pub header: HashMap<String, String>,
+    #[serde(with = "serde_bytes")]
     pub body: Vec<u8>,
+}
+
+fn default_hashmap() -> HashMap<String, String> {
+    HashMap::new()
 }
 
 impl Response {
