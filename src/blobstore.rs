@@ -4,6 +4,8 @@
 //! how the blob store capability works within the constraints of a WebAssembly host runtime, check out
 //! the documentation on [waSCC.dev](https://wascc.dev)
 
+use crate::Sample;
+
 /// Guest sends a Container to the capability provider, receives a Container back
 pub const OP_CREATE_CONTAINER: &str = "CreateContainer";
 /// Guest sends a Container to the capability provider, lack of error indicates success
@@ -25,26 +27,56 @@ pub const OP_RECEIVE_CHUNK: &str = "ReceiveChunk";
 pub const OP_GET_OBJECT_INFO: &str = "GetObjectInfo";
 
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct FileChunk {
     pub sequence_no: u64,
     pub container: String,
     pub id: String,
     pub total_bytes: u64,
     pub chunk_size: u64,
+    #[serde(with = "serde_bytes")]
+    #[serde(default)]
     pub chunk_bytes: Vec<u8>,
 }
 
+impl Sample for FileChunk {
+    fn sample() -> Self {
+        FileChunk {
+            sequence_no: 5,
+            container: "container".to_string(),
+            id: "blob".to_string(),
+            total_bytes: 53400,
+            chunk_size: 1024,
+            chunk_bytes: vec![1, 2, 3, 4, 5],
+        }
+    }
+}
+
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Container {
     pub id: String,
 }
 
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct ContainerList {
+    #[serde(default)]
     pub containers: Vec<Container>,
 }
 
+impl Sample for ContainerList {
+    fn sample() -> Self {
+        ContainerList {
+            containers: vec![Container {
+                id: "container".to_string(),
+            }],
+        }
+    }
+}
+
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Blob {
     pub id: String,
     pub container: String,
@@ -52,11 +84,14 @@ pub struct Blob {
 }
 
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct BlobList {
+    #[serde(default)]
     pub blobs: Vec<Blob>,
 }
 
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct StreamRequest {
     pub id: String,
     pub container: String,
@@ -64,6 +99,7 @@ pub struct StreamRequest {
 }
 
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Transfer {
     pub blob_id: String,
     pub container: String,

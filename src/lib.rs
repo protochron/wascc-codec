@@ -46,6 +46,10 @@ pub fn deserialize<'de, T: Deserialize<'de>>(
     }
 }
 
+pub trait Sample {
+    fn sample() -> Self;
+}
+
 pub mod blobstore;
 pub mod capabilities;
 pub mod core;
@@ -53,5 +57,5 @@ pub mod eventstreams;
 pub mod extras;
 pub mod http;
 pub mod keyvalue;
-pub mod messaging;
 pub mod logging;
+pub mod messaging;

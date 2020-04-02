@@ -4,6 +4,8 @@
 //! shouldn't require a full capability provider plugin, like random numbers, sequence
 //! numbers, etc.
 
+use crate::Sample;
+
 pub const OP_REQUEST_GUID: &str = "RequestGuid";
 pub const OP_REQUEST_SEQUENCE: &str = "RequestSequence";
 pub const OP_REQUEST_RANDOM: &str = "RequestRandom";
@@ -11,6 +13,14 @@ pub const OP_REQUEST_RANDOM: &str = "RequestRandom";
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
 pub struct GeneratorResult {
     pub value: GeneratorResultType,
+}
+
+impl Sample for GeneratorResult {
+    fn sample() -> Self {
+        GeneratorResult {
+            value: GeneratorResultType::Guid("insert_generated_guid_here".to_string()),
+        }
+    }
 }
 
 #[derive(Debug, PartialEq, Deserialize, Serialize)]

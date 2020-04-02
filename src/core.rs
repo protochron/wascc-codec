@@ -15,6 +15,7 @@ pub const OP_REMOVE_ACTOR: &str = "RemoveActor";
 /// LiveUpdate is used when a new module has been uploaded through the HTTP server capability provider. The bytes
 /// contained in this message will, if valid, replace the existing guest module
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct LiveUpdate {
     pub new_module: Vec<u8>,
 }
@@ -32,5 +33,6 @@ pub struct HealthRequest {
 #[derive(Debug, PartialEq, Deserialize, Serialize, Clone)]
 pub struct CapabilityConfiguration {
     pub module: String,
+    #[serde(default)]
     pub values: HashMap<String, String>,
 }
