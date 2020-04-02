@@ -18,6 +18,8 @@
 //! This library provides the core set of types and associated functions used to facilitate guest module
 //! and host runtime communication for wascc.
 
+pub const VERSION: &str = env!("CARGO_PKG_VERSION");
+
 #[macro_use]
 extern crate serde_derive;
 extern crate log;

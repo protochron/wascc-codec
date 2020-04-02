@@ -68,6 +68,7 @@ fn handle_command(cmd: CliCommand) -> Result<(), Box<dyn ::std::error::Error>> {
 
 fn generate_file(cmd: &GenerateCommand) -> Result<(), Box<dyn ::std::error::Error>> {
     let output = json!({
+        "version" : codec::VERSION,
         "httpserver": generate_httpserver_sample(),
         "keyvalue": generate_keyvalue_sample(),
         "blobstore": generate_blobstore_sample(),
