@@ -10,52 +10,30 @@ pub const OP_REQUEST_GUID: &str = "RequestGuid";
 pub const OP_REQUEST_SEQUENCE: &str = "RequestSequence";
 pub const OP_REQUEST_RANDOM: &str = "RequestRandom";
 
-#[derive(Debug, PartialEq, Deserialize, Serialize)]
+#[derive(Debug, PartialEq, Deserialize, Serialize, Default)]
+#[serde(rename_all = "camelCase")]
 pub struct GeneratorResult {
-    pub value: GeneratorResultType,
+    pub guid: Option<String>,
+    pub sequence_number: u64,
+    pub random_number: u32,
 }
 
 impl Sample for GeneratorResult {
     fn sample() -> Self {
         GeneratorResult {
-            value: GeneratorResultType::Guid("insert_generated_guid_here".to_string()),
+            guid: Some("insert_generated_guid_here".to_string()),
+            sequence_number: 0,
+            random_number: 0,
         }
     }
 }
 
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct GeneratorRequest {
-    pub typ: GeneratorRequestType,
-}
-
-#[derive(Debug, PartialEq, Deserialize, Serialize)]
-pub enum GeneratorResultType {
-    Guid(String),
-    SequenceNumber(u64),
-    RandomNumber(u32),
-}
-
-#[derive(Debug, PartialEq, Deserialize, Serialize)]
-pub enum GeneratorRequestType {
-    Guid,
-    SequenceNumber,
-    RandomNumber(u32, u32),
-}
-
-#[cfg(test)]
-mod test {
-    use super::*;
-    use crate::{deserialize, serialize};
-
-    // A quick test to certify that the enum round trip
-    // works fine in message pack
-    #[test]
-    fn round_trip() {
-        let req1 = GeneratorRequest {
-            typ: GeneratorRequestType::RandomNumber(5, 10),
-        };
-        let buf = serialize(&req1).unwrap();
-        let req2: GeneratorRequest = deserialize(&buf).unwrap();
-        assert_eq!(req1, req2);
-    }
+    pub guid: bool,
+    pub sequence: bool,
+    pub random: bool,
+    pub min: u32,
+    pub max: u32,
 }
