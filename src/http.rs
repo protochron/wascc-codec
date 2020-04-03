@@ -1,6 +1,6 @@
 //! # HTTP server capability data structures
 //!
-//! This module contains data types for the `wascc:http_server` and 1wascc:httpclient` capabilities
+//! This module contains data types for the `wascc:http_server` and `wascc:httpclient` capabilities
 
 use crate::Sample;
 use serde::ser::Serialize;
