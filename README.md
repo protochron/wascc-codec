@@ -1,5 +1,5 @@
 [![crates.io](https://img.shields.io/crates/v/wascc-codec.svg)](https://crates.io/crates/wascc-codec)&nbsp;
-![travis](https://travis-ci.org/wascc/wascc-codec.svg?branch=master)&nbsp;
+![Rust](https://github.com/wascc/wascc-codec/workflows/Rust/badge.svg)&nbsp;
 ![license](https://img.shields.io/crates/l/wascc-codec.svg)&nbsp;
 [![documentation](https://docs.rs/wascc-codec/badge.svg)](https://docs.rs/wascc-codec)
 
@@ -18,3 +18,4 @@ This crate includes definitions for a standard set of operations supported by th
 * **Blob Store** - Cloud-native file storage capability
 * **Extras** - Random number generation, sequence numbers, etc
 * **Streams** - Support for an append-only event stream provider
+* **Logging** - Level-based logging
