@@ -9,7 +9,7 @@ pub const OP_PERFORM_LIVE_UPDATE: &str = "PerformLiveUpdate";
 pub const OP_IDENTIFY_CAPABILITY: &str = "IdentifyCapability";
 pub const OP_HEALTH_REQUEST: &str = "HealthRequest";
 pub const OP_INITIALIZE: &str = "Initialize";
-pub const OP_CONFIGURE: &str = "Configure";
+pub const OP_BIND_ACTOR: &str = "BindActor";
 pub const OP_REMOVE_ACTOR: &str = "RemoveActor";
 
 /// LiveUpdate is used when a module is being replaced. The bytes contained in this message will, if valid,
