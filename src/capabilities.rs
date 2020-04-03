@@ -19,7 +19,7 @@ use std::error::Error;
 use std::any::Any;
 
 /// The dispatcher is used by a native capability provider to send commands to an actor module, expecting
-/// a result containing a binary blob in return
+/// a result containing a byte array in return
 pub trait Dispatcher: Any + Send + Sync {
     fn dispatch(&self, actor: &str, op: &str, msg: &[u8]) -> Result<Vec<u8>, Box<dyn Error>>;
 }
@@ -44,14 +44,15 @@ impl Dispatcher for NullDispatcher {
 
 /// Every capability provider must implement this trait
 pub trait CapabilityProvider: Any + Send + Sync {
-    /// This function will be called on the provider when the host runtime is ready and has configured a dispatcher
+    /// This function will be called on the provider when the host runtime is ready and has configured a dispatcher. This function is only ever
+    /// called _once_ for a capability provider, regardless of the number of actors being managed in the host
     fn configure_dispatch(&self, dispatcher: Box<dyn Dispatcher>) -> Result<(), Box<dyn Error>>;
     /// The capability provider will return either one of the well-known capability IDs or a custom capability ID using `namespace:id` notation
     fn capability_id(&self) -> &'static str;
-    /// The human-readable, friendly name of this capability provider. By convention, the provider should include its specific implementation,
-    /// .e.g. include "Redis" in the name for a Redis-based capability provider.
+    /// The human-readable, friendly name of this capability provider. By convention, the provider should include information about
+    /// the specific implementation, e.g. contain the name "Redis" for a K/V store or "NATS" for a message broker.
     fn name(&self) -> &'static str;
-    /// This function is called by the host runtime when an actor module is requesting a command be executed by the capability provider
+    /// This function is called by the host runtime when an actor module requests an operation be executed by the capability provider
     fn handle_call(&self, actor: &str, op: &str, msg: &[u8]) -> Result<Vec<u8>, Box<dyn Error>>;
 }
 

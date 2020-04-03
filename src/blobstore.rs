@@ -26,14 +26,21 @@ pub const OP_RECEIVE_CHUNK: &str = "ReceiveChunk";
 /// Query information on a single blob. Guest sends an incomplete blob struct and gets a complete one in return
 pub const OP_GET_OBJECT_INFO: &str = "GetObjectInfo";
 
+/// Represents a single chunk of a segmented file stream
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FileChunk {
+    /// A sequence number that can be used for retry and ordering logic
     pub sequence_no: u64,
+    /// The container in which this file exists
     pub container: String,
+    /// The unique ID of the blob
     pub id: String,
+    /// Total number of bytes in the entire blob
     pub total_bytes: u64,
+    /// The number of bytes within any given chunk. Note that the last chunk in a file stream may be less than `chunk_size`
     pub chunk_size: u64,
+    /// The raw bytes contained in this chunk
     #[serde(with = "serde_bytes")]
     #[serde(default)]
     pub chunk_bytes: Vec<u8>,
@@ -52,12 +59,14 @@ impl Sample for FileChunk {
     }
 }
 
+/// Represents a container within a blob store
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Container {
     pub id: String,
 }
 
+/// Used to hold a list of containers
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ContainerList {
@@ -75,14 +84,19 @@ impl Sample for ContainerList {
     }
 }
 
+/// Metadata about a blob, not the raw bytes
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Blob {
+    /// Unique ID of the blob
     pub id: String,
+    /// Container in which the blob resides
     pub container: String,
+    /// Total number of bytes of the blob (file size)
     pub byte_size: u64,
 }
 
+/// A wrapper for a list of blobs
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct BlobList {
@@ -90,20 +104,30 @@ pub struct BlobList {
     pub blobs: Vec<Blob>,
 }
 
+/// A request to begin downloading a stream for a blob
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct StreamRequest {
+    /// The unique ID of the requested blob
     pub id: String,
+    /// The container of the requested blob
     pub container: String,
+    /// The preferred size of chunks to be delivered. Consumers must not assume this is the size of the chunks they will get
     pub chunk_size: u64,
 }
 
+/// Metadata about an in-progress file transfer
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Transfer {
+    /// Unique ID of the blob
     pub blob_id: String,
+    /// ID of the container
     pub container: String,
+    /// Size of chunks being transferred
     pub chunk_size: u64,
+    /// Total number of bytes being transferred
     pub total_size: u64,
+    /// Total number of chunks being transferred
     pub total_chunks: u64,
 }

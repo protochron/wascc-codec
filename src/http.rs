@@ -1,23 +1,30 @@
 //! # HTTP server capability data structures
 //!
-//! This module contains data types for the `wascc:http_server` and `wascc:httpclient` capabilities.
+//! This module contains data types for the `wascc:http_server` and 1wascc:httpclient` capabilities
 
 use crate::Sample;
 use serde::ser::Serialize;
 use std::collections::HashMap;
 
+/// Operation invoked on a host to perform an HTTP request
 pub const OP_PERFORM_REQUEST: &str = "PerformRequest";
+/// Operation invoked on an actor in response to an inbound HTTP request
 pub const OP_HANDLE_REQUEST: &str = "HandleRequest";
 
-/// Describes an HTTP request received by the HTTP server capability provider
+/// Describes an HTTP request
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Request {
+    /// The HTTP method (e.g. GET, PUT, DELETE)
     pub method: String,
+    /// The path or URL of the request, leading slashes may not be trimmed
     pub path: String,
+    /// The query string portion of the URL
     pub query_string: String,
+    /// The request headers as a map of key-value pairs
     #[serde(default)]
     pub header: HashMap<String, String>,
+    /// The raw bytes of the request body
     #[serde(with = "serde_bytes")]
     #[serde(default)]
     pub body: Vec<u8>,
@@ -43,15 +50,18 @@ fn sample_header() -> HashMap<String, String> {
     hm
 }
 
-/// Represents an HTTP response that the guest module would like to return in response
-/// to a request command
+/// Represents an HTTP response
 #[derive(Debug, PartialEq, Deserialize, Serialize, Default)]
 #[serde(rename_all = "camelCase")]
 pub struct Response {
+    /// The response's numerical status code (e.g. 200)
     pub status_code: u32,
+    /// The string version of the status (e.g. 'OK')
     pub status: String,
     #[serde(default)]
+    /// HTTP response headers as key-value pairs.
     pub header: HashMap<String, String>,
+    /// The raw bytes of the body
     #[serde(with = "serde_bytes")]
     #[serde(default)]
     pub body: Vec<u8>,

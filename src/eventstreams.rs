@@ -1,7 +1,7 @@
 //! # Event Streaming
 //!
-//! This module contains data types and operation constants for the `wascc:eventstreams` capability
-//! provider. For more information on append-only event streams, event sourcing, and how they apply
+//! This module contains data types and operation constants for the `wascc:eventstreams` capability.
+//! For more information on append-only event streams, event sourcing, and how they apply
 //! to waSCC actor development, check the documentation on [waSCC.dev](https://wascc.dev)
 
 use crate::Sample;
@@ -18,7 +18,9 @@ pub const OP_QUERY_STREAM: &str = "QueryStream";
 #[derive(Debug, PartialEq, Deserialize, Serialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Event {
+    /// The unique ID of the event
     pub event_id: String,
+    /// The stream in which the event occurs
     pub stream: String,
     #[serde(default)]
     pub values: HashMap<String, String>,
@@ -28,6 +30,7 @@ pub struct Event {
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct WriteResponse {
+    /// Unique ID of the event written
     pub event_id: String,
 }
 
@@ -35,9 +38,13 @@ pub struct WriteResponse {
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct StreamQuery {
+    /// ID of the stream to query
     pub stream_id: String,
+    /// An optional time range limiter on the results of the query
     #[serde(default)]
     pub range: Option<TimeRange>,
+    /// A maximum count to return from the query. 0 will return the maximum available
+    /// (which may not include all events--consult the individual provider documentation to verify this behavior)
     pub count: u64,
 }
 
@@ -58,6 +65,7 @@ impl Sample for StreamQuery {
 #[derive(Debug, PartialEq, Deserialize, Serialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct StreamResults {
+    /// The list of events returned by the query
     #[serde(default)]
     pub events: Vec<Event>,
 }
@@ -66,6 +74,8 @@ pub struct StreamResults {
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct TimeRange {
+    /// Minimum time after which events must have occurred to be in the results (seconds since the epoch)
     pub min_time: u64,
+    /// Maximum time before which events must have occurred to be in the results (seconds since the epoch)
     pub max_time: u64,
 }

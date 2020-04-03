@@ -31,7 +31,9 @@ pub struct GetRequest {
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GetResponse {
+    /// The value returned from the data store
     pub value: String,
+    /// Indicates whether the key existed
     pub exists: bool,
 }
 

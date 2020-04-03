@@ -12,27 +12,32 @@ pub const OP_INITIALIZE: &str = "Initialize";
 pub const OP_CONFIGURE: &str = "Configure";
 pub const OP_REMOVE_ACTOR: &str = "RemoveActor";
 
-/// LiveUpdate is used when a new module has been uploaded through the HTTP server capability provider. The bytes
-/// contained in this message will, if valid, replace the existing guest module
+/// LiveUpdate is used when a module is being replaced. The bytes contained in this message will, if valid,
+/// replace the existing actor. This message is sent to an actor from the "system" origin
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct LiveUpdate {
+    /// Raw bytes of the new actor
     pub new_module: Vec<u8>,
 }
 
-/// A health request is passed to a guest module to allow it to return an empty result. If the guest module
-/// returns the empty result, it is considered healthy
+/// A health request is passed to an actor to allow it to return an empty result. If the guest module
+/// returns the empty result, it is considered healthy. More fields may be added to this message in the future
+/// to support more fine-grained health detection
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
 pub struct HealthRequest {
+    /// A placeholder not currently used for health checks
     pub placeholder: bool,
 }
 
-/// Capability providers must be able to accept configuration values on a per-module basis. The module
-/// field will be the public key of the module (the subject field of its embedded JWT), though providers
-/// should make no assumptions about the contents of that field.
+/// Capability providers must be able to accept configuration values on a per-actor basis. The module
+/// field will be the public key of the actor (the `sub` field of its embedded JWT), though providers
+/// should treat this string as opaque data to be used as a key
 #[derive(Debug, PartialEq, Deserialize, Serialize, Clone)]
 pub struct CapabilityConfiguration {
+    /// The key to be used to distinguish actor configuration, this is the subject's public key
     pub module: String,
+    /// Raw configuration values
     #[serde(default)]
     pub values: HashMap<String, String>,
 }
